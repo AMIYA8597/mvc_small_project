@@ -105,7 +105,8 @@
     "yallist": "^4.0.0"
   },
   "scripts": {
-    "test": "nodemon controller/index.js"
+    "test": "nodemon controller/index.js",
+    "dev": "nodemon /index.js"
   },
   "keywords": [],
   "author": "",
