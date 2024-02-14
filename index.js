@@ -11,9 +11,10 @@ app.set("views", path.join(__dirname, "views"));
 
 
 
-
 const indexRoutes = require('./routes/index');
 app.use("/", indexRoutes)
+
+
 
 // app.get("/", (req, res) => {
 //     res.send("welcome to nodejs project list")
