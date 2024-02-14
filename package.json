@@ -66,6 +66,7 @@
     "mime-types": "^2.1.35",
     "minimatch": "^3.1.2",
     "module_name": "^1.0.0",
+    "mongoose": "^8.1.2",
     "ms": "^2.0.0",
     "negotiator": "^0.6.3",
     "nodemon": "^3.0.3",

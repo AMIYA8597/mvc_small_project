@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Todo = require("../model/todo.js")
 
 // Sample data (replace this with your actual data storage)
 let todoItems = [
@@ -17,6 +18,15 @@ router.get('/', (req, res) => {
 router.get('/new', (req, res) => {
     res.render('new');
 });
+
+router.get('/newtodo', async (req, res) => {
+    // res.render('new')
+    let todos = await Todo.find();
+    console.log("here is the todolist",todos);
+    res.send("todos working")
+});
+
+
 
 module.exports = router;
 
