@@ -1,8 +1,12 @@
 const express = require('express');
 const StudentModel = require("../model/student.js");
 const router = express.Router();
+const bodyParser = require('body-parser');
 
 router.use(express.json());
+
+// parse application/json
+router.use(bodyParser.json());
 
 module.exports = {
 

@@ -24,17 +24,17 @@ async function main() {
 const indexRoutes = require('./routes/index');
 app.use("/students", indexRoutes)
 
-let studentDb = new Student({
-    name: "Pijush",
-    email: "pijush@gmail.com",
-    rollNo: 11,
-    class : "Twelve",
-    age: 18,
-})
+// let studentDb = new Student({
+//     name: "Pijush",
+//     email: "pijush@gmail.com",
+//     rollNo: 11,
+//     class : "Twelve",
+//     age: 18,
+// })
 
-studentDb.save().then( (res) =>{
-    console.log(res);
-})
+// studentDb.save().then( (res) =>{
+//     console.log(res);
+// })
 
 
 
@@ -53,7 +53,33 @@ app.listen(5003, () => {
 
 
 
+// http://localhost:5003/students/
 
+// http://localhost:5003/students/get-all-students
+
+// http://localhost:5003/students/add-student
+
+// {
+//     "name": "Amar-kumar",
+//     "email": "amar@gmail.com",
+//     "rollNo": 22,
+//     "class" : "Twelve",
+//     "age": 18
+// }
+
+// http://localhost:5003/students/update-student?_id=65cdb4a45a0d9f8e478257b5
+
+// {
+//     "name": "Soumik",
+//     "email": "Pranay@gmail.com",
+//     "rollNo": 12,
+//     "class" : "Twelve",
+//     "age": 18
+// }
+
+// http://localhost:5003/students/delete_student?_id=65cdb6027c5a13b30bd6fa32
+
+// http://localhost:5003/students/getStudentByName
 
 
 
