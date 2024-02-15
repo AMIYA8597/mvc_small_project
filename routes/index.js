@@ -1,31 +1,84 @@
 const express = require('express');
 const router = express.Router();
-const Todo = require("../model/todo.js")
+const Todo = require("../model/todo.js");
+const StudentModel = require("../model/student.js")
+const StudentController = require("../controller/studentController.js");
 
-// Sample data (replace this with your actual data storage)
-let todoItems = [
-  { id: 1, task: 'Buy milk' },
-  // Add more todo items as needed
-];
+router.get( '/', (req,res) => {
+  res.send("welcome to student page")
+})
 
-// Display all todo items
-router.get('/', (req, res) => {
-    // console.log("request",req)
-    res.render('index', { todoItems });
-});
+router.get( '/get-all-students', StudentController.get_student );
+
+router.get( '/getStudentByName', StudentController.get_student_by_name );
+
+router.post('/add-student', StudentController.add_student);
+
+router.put('/update-student', StudentController.update_student_by_id);
+
+router.delete('/delete_student', StudentController.delete_student);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// let todoItems = [
+  //   { id: 1, task: 'Buy milk' },
+  //   // Add more todo items as needed
+  // ];
+  
+  // // Display all todo items
+  // router.get('/', (req, res) => {
+    //     // console.log("request",req)
+    //     res.render('index', { todoItems });
+    // });
+    
+    
+    
+
+
+
+    
+    
+    // let studentItems = [
+      //   { id: 1, 
+      //     name: "Pijush",
+      //     email: "pijush@gmail.com",
+      //     rollNo: 11,
+      //     class : "Twelve",
+      //     age: 18,
+      //    },
+      
+      // ];
+      
+      
+      // router.get('/', (req, res) => {
+        //     res.render('index', { studentItems });
+        // });
 
 // Display form to add a new todo item
-router.get('/new', (req, res) => {
-    res.render('new');
-});
+// router.get('/new', (req, res) => {
+//     res.render('new');
+// });
 
-router.get('/newtodo', async (req, res) => {
-    // res.render('new')
-    let todos = await Todo.find();
-    console.log("here is the todolist",todos);
-    res.send("todos working")
-});
-
+// router.get('/newtodo', async (req, res) => {
+//     // res.render('new')
+//     let todos = await Todo.find();
+//     console.log("here is the todolist",todos);
+//     res.send("todos working")
+// });
 
 
 module.exports = router;
@@ -52,10 +105,22 @@ module.exports = router;
 
 
 
+// // default  route as given in app.js /students or / as below
+// router.get( '/', (req, res)=> {
+//   res.send('Welcome Students')
+// });
 
+// router.post('/add-student', StudentController.add_student);
+ 
+// router.get( '/get-all-students', StudentController.get_student );
 
+// router.get( '/getStudentByFirstName', StudentController.get_student_by_first_name );
 
+// router.put('/update-student', StudentController.update_student_by_id);
 
+// router.delete('/delete_student', StudentController.delete_student);
+
+// module.exports = router;
 
 
 
