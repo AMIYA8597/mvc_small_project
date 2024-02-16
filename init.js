@@ -56,43 +56,48 @@ async function main() {
     await mongoose.connect('mongodb+srv://student:studentDB@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
   }
 
-// let allStudents = [
-//   {
-//     name: "Pranay",
-//     email: "Pranay@gmail.com",
-//     rollNo: 12,
-//     class : "Twelve",
-//     age: 18,
-// },
-//   {
-//     name: "Roma",
-//     email: "Roma@gmail.com",
-//     rollNo: 9,
-//     class : "Twelve",
-//     age: 18,
-// },
-//   {
-//     name: "Rakesh",
-//     email: "Rakesh@gmail.com",
-//     rollNo: 7,
-//     class : "Twelve",
-//     age: 18,
-// },
-//   {
-//     name: "Pratik",
-//     email: "Pratik@gmail.com",
-//     rollNo: 4,
-//     class : "Twelve",
-//     age: 18,
-// },
-//   {
-//     name: "Samir",
-//     email: "samir@gmail.com",
-//     rollNo: 2,
-//     class : "Twelve",
-//     age: 18,
-// },
+let allStudents = [
+  {
+    name: "Pranay",
+    email: "Pranay@gmail.com",
+    rollNo: 12,
+    class : "Twelve",
+    age: 18,
+    department: "Science"
+},
+  {
+    name: "Roma",
+    email: "Roma@gmail.com",
+    rollNo: 9,
+    class : "Twelve",
+    age: 18,
+    department: "Science"
+},
+  {
+    name: "Rakesh",
+    email: "Rakesh@gmail.com",
+    rollNo: 7,
+    class : "Twelve",
+    age: 18,
+    department: "Science",
+},
+  {
+    name: "Pratik",
+    email: "Pratik@gmail.com",
+    rollNo: 4,
+    class : "Twelve",
+    age: 18,
+    department: "Science",
+},
+  {
+    name: "Samir",
+    email: "samir@gmail.com",
+    rollNo: 2,
+    class : "Twelve",
+    age: 18,
+    department: "Science"
+},
   
-// ]
+]
 
-// Student.insertMany(allStudents)
+Student.insertMany(allStudents)

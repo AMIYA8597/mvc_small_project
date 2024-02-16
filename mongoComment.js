@@ -1,3 +1,9 @@
+    //connect with mongodb with vs code command    
+
+     =>   mongosh $MDB_CONNECTION_STRING
+
+
+
 show database
 
 use (db you want to use)

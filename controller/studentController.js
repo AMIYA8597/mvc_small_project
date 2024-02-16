@@ -1,18 +1,22 @@
 const express = require('express');
 const StudentModel = require("../model/student.js");
 const router = express.Router();
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 router.use(express.json());
 
 // parse application/json
-router.use(bodyParser.json());
+// router.use(bodyParser.json());
 
 module.exports = {
 
     get_student: async (req, res, next) => {
+
+        console.log("this is get request of all student page");
         try {
             const response = await StudentModel.find();
+            console.log("response is ",response);
+
             res.send({ status: 200, resultFound: response.length, student: response });
         } catch (err) {
             res.status(500).send(err);
@@ -20,9 +24,13 @@ module.exports = {
     },
 
     get_student_by_name: async (req, res, next) => {
+
+        console.log("this is get request of all student name  page ");
         const NameQuery = req.query.name;
+        console.log("NameQuery is", NameQuery);
         try {
             const response = await StudentModel.find({ name: NameQuery });
+            // console.log("get student by their name response", response);
             res.send({ status: 200, resultFound: response.length, student: response });
         } catch (err) {
             res.status(500).send(err);
@@ -31,7 +39,7 @@ module.exports = {
     
 
     add_student: async (req, res) => {
-        console.log("request is ", req.body);
+        console.log("request is ", req);
         let newStudent = new StudentModel({
             name: req.body.name,
             email: req.body.email,

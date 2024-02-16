@@ -3,6 +3,9 @@ const router = express.Router();
 const Todo = require("../model/todo.js");
 const StudentModel = require("../model/student.js")
 const StudentController = require("../controller/studentController.js");
+const bodyParser = require('body-parser');
+
+router.use(bodyParser.json());
 
 router.get( '/', (req,res) => {
   res.send("welcome to student page")
@@ -18,9 +21,7 @@ router.put('/update-student', StudentController.update_student_by_id);
 
 router.delete('/delete_student', StudentController.delete_student);
 
-
-
-
+module.exports = router;
 
 
 
@@ -68,33 +69,44 @@ router.delete('/delete_student', StudentController.delete_student);
         //     res.render('index', { studentItems });
         // });
 
-// Display form to add a new todo item
-// router.get('/new', (req, res) => {
-//     res.render('new');
-// });
-
-// router.get('/newtodo', async (req, res) => {
-//     // res.render('new')
-//     let todos = await Todo.find();
-//     console.log("here is the todolist",todos);
-//     res.send("todos working")
-// });
 
 
-module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+        
+        // module.exports = router;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // // Display form to add a new todo item
+        // router.get('/new', (req, res) => {
+        //     res.render('new');
+        // });
+        
+        // router.get('/newtodo', async (req, res) => {
+        //     // res.render('new')
+        //     let todos = await Todo.find();
+        //     console.log("here is the todolist",todos);
+        //     res.send("todos working")
+        // });
 
 
 
