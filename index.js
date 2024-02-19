@@ -2,8 +2,15 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require("path");
-const Todo = require("./model/todo.js");
-const Student = require("./model/student.js")
+const http = require('http');
+const socketIO = require('socket.io');
+// const Todo = require("./model/todo.js");
+// const Student = require("./model/student.js")
+const Chat = require("./model/chat.js")
+
+
+const server = http.createServer(app);
+const io = socketIO(server);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -14,15 +21,58 @@ main().then ( () =>{
 }).catch(err => console.log(err));
 
 async function main() {
-//   await mongoose.connect('mongodb://127.0.0.1:27017/student');
-  await mongoose.connect('mongodb+srv://student:studentDB@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
-}
+  //   await mongoose.connect('mongodb://127.0.0.1:27017/chatApp');
+    await mongoose.connect('mongodb+srv://chatApplication:chatApplication1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
+  }
+
+  const chatRoutes = require('./routes/chatRoutes');
+    app.use("/", chatRoutes)
+
+  //     let chatDb = new Chat({
+  //     userName : "Amiya Chowdhury",
+  //     mobileNo: 7965047382,
+  //     text: " do well",
+  // })
+
+  // chatDb.save().then( (res) =>{
+  //     console.log(res);
+  // })
+
+    app.listen(5003, () => {
+      console.log("server is running on port 5003");
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// async function main() {
+// //   await mongoose.connect('mongodb://127.0.0.1:27017/student');
+//   await mongoose.connect('mongodb+srv://student:studentDB@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
+// }
 // //   await mongoose.connect('mongodb+srv://student:studentDB@cluster0.owqydlw.mongodb.net/?retryWrites=true&w=majority');
 
-
-
-const indexRoutes = require('./routes/index');
-app.use("/students", indexRoutes)
+// const indexRoutes = require('./routes/index');
+// app.use("/students", indexRoutes)
 
 
 
@@ -43,9 +93,9 @@ app.use("/students", indexRoutes)
 
 
 
-app.listen(5003, () => {
-    console.log("server is running on port 5003");
-});
+// app.listen(5003, () => {
+//     console.log("server is running on port 5003");
+// });
 
 
 
