@@ -1,8 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const Todo = require("../model/todo.js");
-// const StudentModel = require("../model/student.js")
-// const StudentController = require("../controller/studentController.js");
 const Chat = require("../model/chat.js");
 const ChatController = require("../controller/chatController.js");
 const bodyParser = require('body-parser');
@@ -15,6 +12,13 @@ router.get( '/', (req,res) => {
 
 router.get("/get_all_users", ChatController.get_users)
 
+router.post('/add-user', ChatController.add_user);
 
+router.get("/signUp", ChatController.get_users)
+
+router.get("/login", ChatController.get_users)
+
+
+// router.get( '/getUserByName', ChatController.get_user_by_name );
 
 module.exports = router;

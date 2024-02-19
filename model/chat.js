@@ -12,7 +12,11 @@ let chatSchema = new mongoose.Schema ( {
                 required: true
         },
 
-        text: String,
+        text: {
+                type :String,
+                required:true
+        },
+
         timestamp: { 
                 type: Date, 
                 default: Date.now 
@@ -22,12 +26,6 @@ let chatSchema = new mongoose.Schema ( {
 const ChatModel = mongoose.model("Chat", chatSchema)
 
 module.exports = ChatModel
-
-
-
-
-
-
 
 
 

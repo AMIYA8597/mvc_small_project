@@ -12,8 +12,13 @@ async function main() {
     await mongoose.connect('mongodb+srv://chatApplication:chatApplication1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
   };
 
-
   let allChats = [
+
+    {
+      userName : "Amiya Chowdhury",
+      mobileNo: 7965047382,
+      text: " do well",
+    },
 
     {
       userName : "Sagar",
@@ -25,6 +30,7 @@ async function main() {
       mobileNo: 7065047312,
       text: " Break the bonds",
     },
+    
     {
       userName : "Malay",
       mobileNo: 8954047382,
@@ -53,17 +59,6 @@ async function main() {
   ]
 
 Chat.insertMany(allChats)
-
-
-
-
-
-
-
-
-
-
-
 
 
 

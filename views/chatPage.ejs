@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>
+        chat application page
+    </h1>
+
+    <div>
+        <% if(chatData.length > 0) { %>
+            <% chatData.forEach(chat => { %>
+                <div>
+                    <p>
+                        userName : <%= chat.userName %>
+                    </p>
+
+                    <p>
+                        Moblie Number : <%= chat.mobileNo %>
+                    </p>
+
+                    <p>
+                        Text : <%= chat.text %>
+                    </p>
+
+                    <p>
+                        Time : <%= chat.timestamp %>
+                    </p>
+
+                </div>
+          <%  }) %>
+
+        <%  }  else {%>
+
+            <p>currently There is no One here</p>
+            <%  }  %>
+    </div>
+</body>
+
+
+
+
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

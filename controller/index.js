@@ -28,11 +28,11 @@
 //     res.render("index")
 // })
 
-// // app.get('/demo', function (req, res) {
-// //     res.send("this is demo page")
+// app.get('/demo', function (req, res) {
+//     res.send("this is demo page")
 
-// //     // res.render("/views/index", {});
-// // })
+//     // res.render("/views/index", {});
+// })
  
 //  app.listen(5002, (req, res) => {
 //     console.log("server is running on port 5002");
