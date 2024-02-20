@@ -1,31 +1,31 @@
 const express = require('express');
-const app = express.Router();
+const router = express.Router();
 const Chat = require("../model/chat.js");
 const ChatController = require("../controller/chatController.js");
 const SignUpController = require("../controller/signUpController.js");
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false})) //Post Body Parser
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({extended: false})) //Post Body Parser
 
-app.get( '/', (req,res) => {
+router.get( '/', (req,res) => {
   // res.send("welcome to Chat Application page")
   res.render("index")
 })
 
-// app.get("/get_all_users", ChatController.get_users)
+// router.get("/get_all_users", ChatController.get_users)
 
-// app.post('/add-user', ChatController.add_user);
+// router.post('/add-user', ChatController.add_user);
 
-app.get("/register", SignUpController.signUp_get)
+router.get("/register", SignUpController.signUp_get)
 
-app.post("/register", SignUpController.signUp_post)
+router.post("/register", SignUpController.signUp_post)
 
-app.get("/login", SignUpController.login_get)
+router.get("/login", SignUpController.login_get)
 
-app.post("/login", SignUpController.login_post)
+router.post("/login", SignUpController.login_post)
 
 
-// app.get( '/getUserByName', ChatController.get_user_by_name );
+// router.get( '/getUserByName', ChatController.get_user_by_name );
 
-module.exports = app;
+module.exports = router;

@@ -7,6 +7,7 @@ const socketIO = require('socket.io');
 // const Todo = require("./model/todo.js");
 // const Student = require("./model/student.js")
 const Chat = require("./model/chat.js")
+const SignUp = require("./model/signUp.js")
 
 
 const server = http.createServer(app);
@@ -25,8 +26,15 @@ async function main() {
     await mongoose.connect('mongodb+srv://signUP:signUP1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
   }
 
-  const chatRoutes = require('./routes/chatRoutes');
-    app.use("/", chatRoutes)
+  const signUpRoutes = require('./routes/signUpRoutes');
+    app.use("/", signUpRoutes)
+
+    app.listen(5003, () => {
+      console.log("server is running on port 5003");
+    });
+
+    
+
 
 
 // async function main() {
@@ -47,9 +55,9 @@ async function main() {
   //     console.log(res);
   // })
 
-    app.listen(5003, () => {
-      console.log("server is running on port 5003");
-    });
+    // app.listen(5003, () => {
+    //   console.log("server is running on port 5003");
+    // });
 
 
 

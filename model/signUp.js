@@ -6,13 +6,17 @@ let signUpSchema = new mongoose.Schema ( {
 
         userName :{
                 type:String,
-                required: true
+                required: true,
+                trim: true
         },
                 
         mobileNo:{
-                type :Number,
+                type :  Number,
                 required: true,
-                unique: true
+                unique: true,
+                minlength:  10,
+                maxlength:  10,
+                trim: true
         },
 
         password: {

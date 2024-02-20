@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 // const Todo = require("./model/todo.js")
 // const Student = require("./model/student.js")
 const Chat = require("./model/chat.js")
+const SignUp = require("./model/signUp.js")
 
 main().then ( () =>{
     console.log("connection successful");
