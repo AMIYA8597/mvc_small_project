@@ -56,6 +56,7 @@ module.exports = {
         }
     },
 
+    
     // add_student: async (req, res) => {
     //     try {
     //         if (!req.body || !req.body.name || !req.body.email || !req.body.rollNo || !req.body.class || !req.body.age) {

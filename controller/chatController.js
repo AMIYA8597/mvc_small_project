@@ -1,14 +1,14 @@
 const express = require('express');
 const randomstring = require('randomstring');
+const bcrypt = require('bcrypt');
 const ChatModel = require("../model/chat.js");
 const router = express.Router();
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 router.use(express.json());
 
-// parse application/json
-// router.use(bodyParser.json());
-
+//  // parse application/json
+router.use(bodyParser.json());
 
 
 
@@ -18,7 +18,7 @@ module.exports = {
         try {
             // Fetch required fields from the MongoDB server
             const response = await ChatModel.find({}, 'userName mobileNo text timestamp');
-            console.log("response is ", response);
+            // console.log("response is ", response);
             // Render the EJS template with the fetched data
             res.render("chatPage", { chatData: response } );
         } catch (err) {
@@ -27,22 +27,74 @@ module.exports = {
     },
 
     add_user: async (req, res) => {
-        console.log("request is ", req);
+        console.log("request is ", req.body);
         let newChatUser = new ChatModel({
             userName: req.body.userName,
             mobileNo: req.body.mobileNo,
-            text: req.body.text,
+            password: req.body.password,
+            // text: req.body.text,
             timestamp: req.body.timestamp,
             // age: req.body.age
         });
 
         try {
-            const savedChatUser = await newChatUser.save();
+            const savedChatUser = await new newChatUser.save();
             res.send({ status: 200, msg: 'post: /add-user  works', chatObj: savedChatUser });
         } catch (err) {
             res.status(500).send(err);
         }
-    },  
+    }, 
+    
+    signUp_get: async (req , res) => {
+
+        // const response = await ChatModel.find({}, 'userName mobileNo password');
+        res.render("signUp" )    //, {chatData : response}
+    },
+
+
+    signUp_post : async (req, res) => {
+        console.log("signUp_post method started");
+
+        let newChatUser = new ChatModel({
+            userName: req.body.userName,
+            mobileNo: req.body.mobileNo,
+            password: req.body.password,
+            // text: req.body.text,
+            // timestamp: req.body.timestamp,
+            // age: req.body.age
+        });
+        const reqt = req.body;
+        console.log("reqt is" , reqt);
+        try {
+
+        
+
+            // console.log("userName" , userName);
+            // console.log("mobileNo" , mobileNo);
+            // console.log("password" , password);
+            // const chat = new ChatModel({ userName , mobileNo , password});
+            // console.log("chat is ", chat);
+            // const ChatUserSave =  await chat.save();
+            // console.log("ChatUserSave", ChatUserSave);
+            // res.send({status: 200, message:'post: /register work' , chatObject:ChatUserSave })
+
+            res.redirect("/login");
+            
+        } catch (error) {
+            console.log("facing error");
+        }
+    },
+
+    login_get : async (req, res) => {
+        res.render("login")
+    },
+
+    login_post : async (req, res) => {
+        const { mobileNo , password} = req.body;
+        res.redirect("/")
+    },
+
+
 
 }
 
@@ -105,6 +157,47 @@ module.exports = {
 
 
 
+// const bcrypt = require('bcrypt');
+// const User = require('../models/User');
+
+// exports.getSignup = (req, res) => {
+//   res.render('signup');
+// };
+
+// exports.postSignup = async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const user = new User({
+//       username,
+//       password: hashedPassword,
+//     });
+//     await user.save();
+//     res.redirect('/signin');
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Internal Server Error');
+//   }
+// };
+
+// exports.getSignin = (req, res) => {
+//   res.render('signin');
+// };
+
+// exports.postSignin = async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+//     const user = await User.findOne({ username });
+//     if (user && (await bcrypt.compare(password, user.password))) {
+//       req.session.userId = user._id;
+//       return res.send('Logged in successfully!');
+//     }
+//     res.send('Invalid username or password!');
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Internal Server Error');
+//   }
+// };
 
 
 

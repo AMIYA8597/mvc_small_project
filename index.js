@@ -21,12 +21,21 @@ main().then ( () =>{
 }).catch(err => console.log(err));
 
 async function main() {
-  //   await mongoose.connect('mongodb://127.0.0.1:27017/chatApp');
-    await mongoose.connect('mongodb+srv://chatApplication:chatApplication1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
+  //   await mongoose.connect('mongodb://127.0.0.1:27017/signUp');
+    await mongoose.connect('mongodb+srv://signUP:signUP1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
   }
 
   const chatRoutes = require('./routes/chatRoutes');
     app.use("/", chatRoutes)
+
+
+// async function main() {
+//   //   await mongoose.connect('mongodb://127.0.0.1:27017/chatApp');
+//     await mongoose.connect('mongodb+srv://chatApplication:chatApplication1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
+//   }
+
+//   const chatRoutes = require('./routes/chatRoutes');
+//     app.use("/", chatRoutes)
 
   //     let chatDb = new Chat({
   //     userName : "Amiya Chowdhury",
