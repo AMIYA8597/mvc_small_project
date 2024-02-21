@@ -57,11 +57,11 @@ module.exports = {
             const signUser = await SignUpModel.findOne({mobileNo})
             
             if(!signUser) {
-                res.render("login")
+                res.render("login", {error: "invalid mobileNumber or password"} )
             }
 
             if(signUser.password !==password) {
-                res.render("login")
+                res.render("login", {error: "invalid mobileNumber or password"} )
             }
 
             res.redirect("/after")
@@ -75,8 +75,59 @@ module.exports = {
         res.render("after")
     },
 
+    forget_get : async (req, res) => {
+        res.render("forgetPass")
+    },
 
+    forget_post : async (req,res) => {
+        console.log("forgot password is starting");
+        // res.send("forget password is working")
+        const { mobileNo , newPassword} = req.body;
+        try {
+            const forgetUser = await SignUpModel.findOne({mobileNo});
+
+            if(!forgetUser){
+                res.render("forgetpass")
+                // alert( "This user does not exist! Please enter correct details.")              
+            };
+            
+            forgetUser.password=newPassword;
+            await forgetUser.save();
+            res.redirect("login" )
+            
+        }  catch(err){
+            console.log(err);
+        }
+        
+        // res.redirect("/login");
+    },
+    
 }
+
+
+
+
+
+
+//   //  ,{success:"your password has been changed successfully!"}
+
+
+//             }else{
+//                let updateUser=await SignUpModel.updateOne({mobileNo},{$set:{password:newPassword}})  
+//                if(updateUser){
+//                   res.render('index',{success:"Your Password has been changed Successfully!"})
+//                }
+//            }                  
+            
+//         }catch(err) {console.log(err)}
+        
+//     }
+// };
+
+
+
+
+
 
 
 
@@ -126,13 +177,13 @@ module.exports = {
 
 //         if (!user) {
 //             // User not found, redirect back to login page with an error message
-//             return res.render("login", { error: "Invalid mobile number or password" });
+//             return res.render("login", { error: "Invalid mobile number or password" } );
 //         }
 
 //         // Check if the provided password matches the stored password
 //         if (user.password !== password) {
 //             // Passwords do not match, redirect back to login page with an error message
-//             return res.render("login", { error: "Invalid mobile number or password" });
+//             return res.render("login", { error: "Invalid mobile number or password" } );
 //         }
 
 //         // Passwords match, authentication successful, redirect to homepage or dashboard
@@ -145,6 +196,44 @@ module.exports = {
 // }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+// forgotPassword_post: async (req, res) => {
+//     console.log("forgot password is working");
+
+//     const { mobileNo, newPassword } = req.body;
+
+//     try {
+//         // Find the user with the provided mobile number
+//         const user = await SignUpModel.findOne({ mobileNo });
+
+//         if (!user) {
+//             // User not found, redirect back to login page with an error message
+//             return res.render("login", { error: "User not found" });
+//         }
+
+//         // Update the user's password with the new password
+//         user.password = newPassword;
+//         await user.save();
+
+//         // Password reset successful, redirect to the login page
+//         res.redirect("/login");
+//     } catch (error) {
+//         // Handle any errors that occur during password reset process
+//         console.error("Forgot password error:", error);
+//         res.status(500).send("Internal Server Error");
+//     }
+// }
 
 
 
