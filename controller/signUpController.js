@@ -1,8 +1,8 @@
 const express = require('express');
+const app = express.Router();
 const randomstring = require('randomstring');
 const bcrypt = require('bcrypt');
 const SignUpModel = require("../model/signUp.js");
-const app = express.Router();
 const bodyParser = require('body-parser');
 
 app.use(express.json());
@@ -20,20 +20,27 @@ module.exports = {
     signUp_post : async (req, res) => {
         console.log("signUp_post method started");
         const {userName, mobileNo, password } = req.body
-        console.log("userName is ", userName);
-        console.log("mobileNo is ", mobileNo);
-        console.log("password is ", password);
-
+        // console.log("userName is ", userName);
+        // console.log("mobileNo is ", mobileNo);
+        // console.log("password is ", password);
+        
+        //  // Validate password length
+    if (password.length < 6) {
+        // return res.render("login", { error: "Password must be at least 8 characters long" });
+        res.send("password need min 6 character")
+        return;
+    }
         let newSignUpUser = new SignUpModel({
             userName: req.body.userName,
             mobileNo: req.body.mobileNo,
-            password: req.body.password,
-            
+            password: req.body.password,         
         });
         const request = req.body;
         console.log("request is" , request);
         
+
         try {
+
                 const savedSignUpUser = await newSignUpUser.save();
                 console.log("savedSignUpUser is", savedSignUpUser);
                 // res.send({ status: 200, msg: 'post: /register  works', chatObj: savedSignUpUser });
@@ -52,6 +59,12 @@ module.exports = {
 
     login_post : async (req, res) => {
         const { mobileNo , password} = req.body;
+
+        if (password.length < 6) {
+            // return res.render("login", { error: "Password must be at least 8 characters long" });
+            res.send("password need min 6 character")
+            return;
+        }
         try {
     
             const signUser = await SignUpModel.findOne({mobileNo})
@@ -81,8 +94,14 @@ module.exports = {
 
     forget_post : async (req,res) => {
         console.log("forgot password is starting");
-        // res.send("forget password is working")
         const { mobileNo , newPassword} = req.body;
+
+        if (newPassword.length < 6) {
+            // return res.render("login", { error: "Password must be at least 8 characters long" });
+            res.send("password need min 6 character")
+            return;
+        }
+
         try {
             const forgetUser = await SignUpModel.findOne({mobileNo});
 
@@ -195,6 +214,51 @@ module.exports = {
 //     }
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// login_post: async (req, res) => {
+//     const { mobileNo, password } = req.body;
+
+//     try {
+//         // Validate mobile number format using regular expression
+//         const mobileRegex = /^[0-9]{10}$/;
+//         if (!mobileRegex.test(mobileNo)) {
+//             return res.render("login", { error: "Invalid mobile number format" });
+//         }
+
+//         // Validate password length
+//         if (password.length < 8) {
+//             return res.render("login", { error: "Password must be at least 8 characters long" });
+//         }
+
+//         // Find the user with the provided mobile number
+//         const user = await SignUpModel.findOne({ mobileNo });
+
+//         if (!user || user.password !== password) {
+//             // User not found or password doesn't match, render login page with error
+//             return res.render("login", { error: "Invalid mobile number or password" });
+//         }
+
+//         // Redirect to the appropriate page after successful login
+//         res.redirect("/after");
+//     } catch (error) {
+//         console.error("Login error:", error);
+//         res.status(500).send("Internal Server Error");
+//     }
+// }
 
 
 

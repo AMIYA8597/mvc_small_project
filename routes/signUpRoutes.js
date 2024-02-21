@@ -27,3 +27,4 @@ app.get("/forgetpass", SignUpController.forget_get)
 app.post("/forgetpass", SignUpController.forget_post)
 
 module.exports = app;
+
