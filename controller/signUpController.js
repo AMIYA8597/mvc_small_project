@@ -2,6 +2,7 @@ const express = require('express');
 const app = express.Router();
 const randomstring = require('randomstring');
 const bcrypt = require('bcrypt');
+const mobileRegex = /^[0-9]{10}$/;
 const SignUpModel = require("../model/signUp.js");
 const bodyParser = require('body-parser');
 
@@ -30,6 +31,19 @@ module.exports = {
         res.send("password need min 6 character")
         return;
     }
+
+    // if( mobileNo==Number && mobileNo == /^[0-9]{10}$/ ) {
+    //     res.send("Invalid Mobile Number")
+    //     return ;
+    // }
+
+    //   //  // Validate mobile number using regex
+
+    if (!mobileRegex.test(mobileNo)) {
+        res.send("Invalid Mobile Number");
+        return;
+    }
+
         let newSignUpUser = new SignUpModel({
             userName: req.body.userName,
             mobileNo: req.body.mobileNo,
@@ -65,6 +79,18 @@ module.exports = {
             res.send("password need min 6 character")
             return;
         }
+
+        // if( mobileNo ==Number && mobileNo === /[\d]{10}/ ) {
+        //     // res.send("Invalid Mobile Number")
+        //     return ;
+        // }
+
+        //  // Validate mobile number using regex   
+        if (!mobileRegex.test(mobileNo)) {
+            res.send("Invalid Mobile Number");
+            return;
+        }
+        
         try {
     
             const signUser = await SignUpModel.findOne({mobileNo})
@@ -99,6 +125,18 @@ module.exports = {
         if (newPassword.length < 6) {
             // return res.render("login", { error: "Password must be at least 8 characters long" });
             res.send("password need min 6 character")
+            return;
+        }
+
+        // if( mobileNo ==Number  && mobileNo === /[\d]{10}/ ) {
+        //     // res.send("Invalid Mobile Number")
+        //     return ;
+        // }
+
+         //  // Validate mobile number using regex
+    
+        if (!mobileRegex.test(mobileNo)) {
+            res.send("Invalid Mobile Number");
             return;
         }
 
@@ -217,6 +255,45 @@ module.exports = {
 
 
 
+
+
+
+
+
+// const mobileRegex = /^[0-9]{10}$/;
+
+// signUp_post: async (req, res) => {
+//     console.log("signUp_post method started");
+//     const { userName, mobileNo, password } = req.body;
+
+//   //  // Validate password length
+//     if (password.length < 6) {
+//         res.send("Password must be at least 6 characters long");
+//         return;
+//     }
+
+//   //  // Validate mobile number using regex
+//     if (!mobileRegex.test(mobileNo)) {
+//         res.send("Invalid Mobile Number");
+//         return;
+//     }
+
+//     let newSignUpUser = new SignUpModel({
+//         userName: req.body.userName,
+//         mobileNo: req.body.mobileNo,
+//         password: req.body.password,
+//     });
+
+//     try {
+//         const savedSignUpUser = await newSignUpUser.save();
+//         console.log("savedSignUpUser is", savedSignUpUser);
+//         res.redirect("/login");
+//         console.log("Everything is working");
+//     } catch (err) {
+//         console.log("Error:", err);
+//         res.status(500).send("Internal Server Error");
+//     }
+// },
 
 
 

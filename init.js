@@ -9,57 +9,157 @@ main().then ( () =>{
 }).catch(err => console.log(err));
 
 async function main() {
-  //   await mongoose.connect('mongodb://127.0.0.1:27017/chatApp');
-    await mongoose.connect('mongodb+srv://chatApplication:chatApplication1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
-  };
+  //   await mongoose.connect('mongodb://127.0.0.1:27017/signUp');
+    await mongoose.connect('mongodb+srv://signUP:signUP1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
+  }
 
-  let allChats = [
+let allSignUp = [
+  {
+    userName: 'varane',
+    mobileNo: 9876123405,
+    password: 'varane',
+  },
 
-    {
-      userName : "Amiya Chowdhury",
-      mobileNo: 7965047382,
-      text: " do well",
-    },
+  {
+    userName: 'L Hernandez',
+    mobileNo: 9812763450,
+    password: 'hernandez',
+  },
 
-    {
-      userName : "Sagar",
-      mobileNo: 7965047392,
-      text: " go ",
-    },
-    {
-      userName : "Ankan",
-      mobileNo: 7065047312,
-      text: " Break the bonds",
-    },
+  {
+    userName: 'griezman',
+    mobileNo: 9887766554,
+    password: 'griezman',
+  },
+
+  {
+    userName: 'pogba',
+    mobileNo: 9877656545,
+    password: 'paulpogba',
+  },
+
+  {
+    userName: 'Lloris',
+    mobileNo: 7878787878,
+    password: 'dfdfdfdf',
+  },
+  {
+    userName: 'mbappe',
+    mobileNo: 9898989898,
+    password: 'mbappe',
+  },
+  {
+    userName: 'Matuidi',
+    mobileNo: 7689454607,
+    password: 'Matuidi',
+  },
+
+  {
+    userName: 'kante',
+    mobileNo: 7689787607,
+    password: 'lohugkhju',
+  },
+
+  {
+    userName: 'pavard',
+    mobileNo: 7689748907,
+    password: 'egrstgrtghrst',
+  },
+
+  {
+    userName: 'umtiti',
+    mobileNo: 7689746907,
+    password: 'assdgfsf',
+  },
+
+  {
+    userName: 'giroud',
+    mobileNo: 7689746908,
+    password: 'dfsdfgs',
+  }
+
+],
+
+SignUp.insertMany(allSignUp);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// async function main() {
+//   //   await mongoose.connect('mongodb://127.0.0.1:27017/chatApp');
+//     await mongoose.connect('mongodb+srv://chatApplication:chatApplication1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
+//   };
+
+//   let allChats = [
+
+//     {
+//       userName : "Amiya Chowdhury",
+//       mobileNo: 7965047382,
+//       text: " do well",
+//     },
+
+//     {
+//       userName : "Sagar",
+//       mobileNo: 7965047392,
+//       text: " go ",
+//     },
+//     {
+//       userName : "Ankan",
+//       mobileNo: 7065047312,
+//       text: " Break the bonds",
+//     },
     
-    {
-      userName : "Malay",
-      mobileNo: 8954047382,
-      text: " something happened",
-    },
-    {
-      userName : "Prasit",
-      mobileNo: 7585007382,
-      text: " Field is required",
-    },
-    {
-      userName : "Chinmay",
-      mobileNo: 6294047382,
-      text: " Wait a littlebit",
-    },
-    {
-      userName : "Shuva",
-      mobileNo: 7653847382,
-      text: " Nothing",
-    },
-    {
-      userName : "Koushik",
-      mobileNo: 8795437382,
-      text: " call again",
-    },
-  ]
+//     {
+//       userName : "Malay",
+//       mobileNo: 8954047382,
+//       text: " something happened",
+//     },
+//     {
+//       userName : "Prasit",
+//       mobileNo: 7585007382,
+//       text: " Field is required",
+//     },
+//     {
+//       userName : "Chinmay",
+//       mobileNo: 6294047382,
+//       text: " Wait a littlebit",
+//     },
+//     {
+//       userName : "Shuva",
+//       mobileNo: 7653847382,
+//       text: " Nothing",
+//     },
+//     {
+//       userName : "Koushik",
+//       mobileNo: 8795437382,
+//       text: " call again",
+//     },
+//   ]
 
-Chat.insertMany(allChats)
+// Chat.insertMany(allChats)
+
+
 
 
 

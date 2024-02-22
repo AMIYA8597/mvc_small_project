@@ -1,6 +1,4 @@
 
-
-
 // <!-- <body class="container">
 //   <h1 class="heading">Todo List</h1>
 //   <ul class="list-container">

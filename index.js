@@ -37,6 +37,10 @@ async function main() {
 
 
 
+
+
+    
+
 // async function main() {
 //   //   await mongoose.connect('mongodb://127.0.0.1:27017/chatApp');
 //     await mongoose.connect('mongodb+srv://chatApplication:chatApplication1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
