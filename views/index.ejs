@@ -10,27 +10,49 @@
     <h1>
       Hi Users , Welcome to the page , Now you can SignUp here
     </h1>
-        <!-- <a href="/register/">SignUp Here</a> -->
-        
+    <!-- <a href="/register/">SignUp Here</a> -->
+    
     <input type="button" value="Go to SignUp Page " onclick="location.href='/register'"/>  
-        
+    
   </body>
   
-</html>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+  </html>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+  @endif
+  
+  <form action="/signup" method="post">
+    {{ csrf_field() }}
+    Name : <input type="text" name="name"><br><br>
+    Email: <input type="email" name="email"><br><br>
+    Password: <input type="password" name="password"><br><br>
+    Confirm Password: <input type="password" name="confirm_password"><br><br>
+    
+    <button type="submit">Sign Up</button>
+  </form>
+
+</body>
+</html> -->
       
       
       

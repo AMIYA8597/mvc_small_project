@@ -14,8 +14,8 @@ let signUpSchema = new mongoose.Schema ( {
                 type :  Number,
                 required: true,
                 unique: true,
-                minlength:  10,
-                maxlength:  10,
+                // minlength:  10,
+                // maxlength:  10,
                 trim: true
         },
 

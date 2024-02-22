@@ -86,6 +86,7 @@ module.exports = {
         // }
 
         //  // Validate mobile number using regex   
+
         if (!mobileRegex.test(mobileNo)) {
             res.send("Invalid Mobile Number");
             return;
@@ -157,6 +158,10 @@ module.exports = {
         }
         
         // res.redirect("/login");
+    },
+
+    home_get : async (req, res) => {
+        res.render("home")
     },
     
 }

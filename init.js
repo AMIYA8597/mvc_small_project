@@ -5,7 +5,9 @@ const Chat = require("./model/chat.js")
 const SignUp = require("./model/signUp.js")
 
 main().then ( () =>{
+
     console.log("connection successful");
+    
 }).catch(err => console.log(err));
 
 async function main() {

@@ -26,5 +26,6 @@ app.get("/forgetpass", SignUpController.forget_get)
 
 app.post("/forgetpass", SignUpController.forget_post)
 
+app.get("/home", SignUpController.home_get)
+//Chatting page
 module.exports = app;
-
