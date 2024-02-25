@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const app = express();
 const mongoose = require('mongoose');
 const path = require("path");
@@ -8,6 +9,7 @@ const socketIO = require('socket.io');
 // const Student = require("./model/student.js")
 const Chat = require("./model/chat.js")
 const SignUp = require("./model/signUp.js")
+// const UserChat = require("./model/userChat.js")
 
 
 const server = http.createServer(app);
@@ -26,8 +28,17 @@ async function main() {
     await mongoose.connect('mongodb+srv://signUP:signUP1234@cluster0.hcwcnib.mongodb.net/?retryWrites=true&w=majority');
   }
 
+
+  
+  
   const signUpRoutes = require('./routes/signUpRoutes');
-    app.use("/", signUpRoutes)
+  app.use("/", signUpRoutes)
+  
+  //   app.use(session({
+  //     secret: 'your-secret-key',
+  //     resave: false,
+  //     saveUninitialized: true
+  // }));
 
     app.listen(5003, () => {
       console.log("server is running on port 5003");

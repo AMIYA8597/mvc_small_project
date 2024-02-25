@@ -28,6 +28,7 @@ function signUp () {
             });
         };
     };
+    
   
     return (
         <div className="container">
