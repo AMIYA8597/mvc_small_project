@@ -4,7 +4,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 
 let signUpSchema = new mongoose.Schema ( {
 
-        userName :{
+        userName :{     
                 type:String,
                 required: true,
                 trim: true
@@ -14,8 +14,6 @@ let signUpSchema = new mongoose.Schema ( {
                 type :  Number,
                 required: true,
                 unique: true,
-                // minlength:  10,
-                // maxlength:  10,
                 trim: true
         },
 

@@ -25,7 +25,6 @@ router.get("/login", SignUpController.login_get)
 
 router.post("/login", SignUpController.login_post)
 
-
 // router.get( '/getUserByName', ChatController.get_user_by_name );
 
 module.exports = router;
