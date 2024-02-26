@@ -14,6 +14,13 @@ app.use(express.json());
 //  // parse application/json
 app.use(bodyParser.json());
 
+// //  Session middleware setup
+// app.use(session({
+//     secret: 'your-secret-key', // Change this to a random string
+//     resave: false,
+//     saveUninitialized: true
+// }));
+
 module.exports = { 
 
     signUp_get: async (req , res) => {
@@ -88,6 +95,8 @@ module.exports = {
                 }
                 // req.session.userId = signUser._id
                 // // res.redirect("/after")
+
+                req.session.userId = signUser._id;
                 res.redirect("/chat")
     
             }        catch (error)
@@ -96,35 +105,58 @@ module.exports = {
                 }
     },
 
-    
-
     createChat_get : async (req , res) => {
-        // res.render("userChat" ) 
-        const { userName , mobileNo} = req.body;
-
-        console.log("username and mobile number is",userName , mobileNo);
-
-    
-        // console.log("createChat_get starting");
-
-        // // res.send( "createChat_get starting "  )
-
-        // res.render("userChat")
 
         try {
-            // const response = await SignUpModel.findOne({ mobileNo: 9876564578 });
-
-            // const response = await SignUpModel.find({}, 'userName mobileNo ').sort({ createdAt: -1 }).limit(1);
-            const response = await SignUpModel.findOne({}, 'userName mobileNo').sort({ createdAt: -1 });
-
-             // Assuming createdAt field indicates the order of creation
-            // console.log("response is ", response);
+            // Retrieve the logged-in user's information
+            const loggedInUser = await SignUpModel.findOne({ _id: req.session.userId });
             
-            res.render("userChat", { chatData: response } );
-
-        } catch (err) {
-            res.status(500).send(err);
+            if (!loggedInUser) {
+                // If user not found, redirect to login page
+                res.redirect("/login");
+                return;
+            }
+    
+            // Render the create chat page with user information
+            res.render("userChat", { userName: loggedInUser.userName, mobileNo: loggedInUser.mobileNo });
+        } catch (error) {
+            console.error("Error retrieving user information:", error);
+            res.redirect("/login"); // Redirect to login page in case of any error
         }
+
+
+
+        // res.render("userChat" ) 
+        // const { userName , mobileNo} = req.body;
+
+        // console.log("username and mobile number is",userName , mobileNo);
+
+    
+        // // console.log("createChat_get starting");
+
+        // // // res.send( "createChat_get starting "  )
+
+        // // res.render("userChat")
+
+        // try {
+        //     // const response = await SignUpModel.findOne({ mobileNo: 9876564578 });
+
+        //     // const response = await SignUpModel.find({}, 'userName mobileNo ').sort({ createdAt: -1 }).limit(1);
+        //     const response = await SignUpModel.findOne({}, 'userName mobileNo').sort({ createdAt: -1 });
+
+        //      // Assuming createdAt field indicates the order of creation
+        //     // console.log("response is ", response);
+            
+        //     res.render("userChat", { chatData: response } );
+
+        // } catch (err) {
+        //     res.status(500).send(err);
+        // }
+
+
+
+
+
 
 
         // try {
@@ -167,6 +199,7 @@ module.exports = {
         // }
            
     },
+
 
     after_get : async (req, res) => {
         res.render("after")
@@ -222,6 +255,263 @@ module.exports = {
     },
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // signUp_get: async (req, res) => {
+    //     res.render("signUp");
+    // },
+
+    // signUp_post: async (req, res) => {
+    //     console.log("signUp_post method started");
+    //     const { userName, mobileNo, password } = req.body;
+        
+    //     if (password.length < 6) {
+    //         res.send("Password needs to be at least 6 characters long");
+    //         return;
+    //     }
+
+    //     if (!mobileRegex.test(mobileNo)) {
+    //         res.send("Invalid Mobile Number");
+    //         return;
+    //     }
+
+    //     try {
+    //         const newSignUpUser = new SignUpModel({
+    //             userName: userName,
+    //             mobileNo: mobileNo,
+    //             password: password
+    //         });
+
+    //         const savedSignUpUser = await newSignUpUser.save();
+    //         console.log("savedSignUpUser is", savedSignUpUser);
+    //         res.redirect("/login");
+    //     } catch (err) {
+    //         console.log("Error:", err);
+    //         res.status(500).send("Error occurred while signing up");
+    //     }
+    // },
+
+    // login_get: async (req, res) => {
+    //     res.render("login");
+    // },
+
+    // login_post: async (req, res) => {
+    //     const { mobileNo, password } = req.body;
+
+    //     if (password.length < 6) {
+    //         res.send("Password needs to be at least 6 characters long");
+    //         return;
+    //     }
+
+    //     if (!mobileRegex.test(mobileNo)) {
+    //         res.send("Invalid Mobile Number");
+    //         return;
+    //     }
+        
+    //     try {
+    //         const signUser = await SignUpModel.findOne({ mobileNo });
+            
+    //         if (!signUser || signUser.password !== password) {
+    //             res.render("login", { error: "Invalid mobile number or password" });
+    //             return;
+    //         }
+            
+    //         req.session.userId = signUser._id;
+    //         res.redirect("/chat");
+    //     } catch (error) {
+    //         console.log("Error:", error);
+    //         res.status(500).send("Error occurred while logging in");
+    //     }
+    // },
+
+    // createChat_get: async (req, res) => {
+    //     try {
+    //         const loggedInUser = await SignUpModel.findById(req.session.userId);
+            
+    //         if (!loggedInUser) {
+    //             res.redirect("/login");
+    //             return;
+    //         }
+    
+    //         res.render("userChat", { userName: loggedInUser.userName, mobileNo: loggedInUser.mobileNo });
+    //     } catch (error) {
+    //         console.error("Error retrieving user information:", error);
+    //         res.redirect("/login");
+    //     }
+    // },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// signUp_get: async (req, res) => {
+//     res.render("signUp");
+// },
+
+// signUp_post: async (req, res) => {
+//     console.log("signUp_post method started");
+//     const { userName, mobileNo, password } = req.body;
+    
+//     if (password.length < 6) {
+//         res.send("Password needs to be at least 6 characters long");
+//         return;
+//     }
+
+//     if (!mobileRegex.test(mobileNo)) {
+//         res.send("Invalid Mobile Number");
+//         return;
+//     }
+
+//     try {
+//         const newSignUpUser = new SignUpModel({
+//             userName: userName,
+//             mobileNo: mobileNo,
+//             password: password
+//         });
+
+//         const savedSignUpUser = await newSignUpUser.save();
+//         console.log("savedSignUpUser is", savedSignUpUser);
+//         res.redirect("/login");
+//     } catch (err) {
+//         console.log("Error:", err);
+//         res.status(500).send("Error occurred while signing up");
+//     }
+// },
+
+// login_get: async (req, res) => {
+//     res.render("login");
+// },
+
+// login_post: async (req, res) => {
+//     const { mobileNo, password } = req.body;
+
+//     if (password.length < 6) {
+//         res.send("Password needs to be at least 6 characters long");
+//         return;
+//     }
+
+//     if (!mobileRegex.test(mobileNo)) {
+//         res.send("Invalid Mobile Number");
+//         return;
+//     }
+    
+//     try {
+//         const signUser = await SignUpModel.findOne({ mobileNo });
+        
+//         if (!signUser || signUser.password !== password) {
+//             res.render("login", { error: "Invalid mobile number or password" });
+//             return;
+//         }
+        
+//         req.session.userId = signUser._id;
+//         res.redirect("/chat");
+//     } catch (error) {
+//         console.log("Error:", error);
+//         res.status(500).send("Error occurred while logging in");
+//     }
+// },
+
+// createChat_get: async (req, res) => {
+//     try {
+//         const loggedInUser = await SignUpModel.findById(req.session.userId);
+        
+//         if (!loggedInUser) {
+//             res.redirect("/login");
+//             return;
+//         }
+
+//         res.render("createChat", { userName: loggedInUser.userName, mobileNo: loggedInUser.mobileNo });
+//     } catch (error) {
+//         console.error("Error retrieving user information:", error);
+//         res.redirect("/login");
+//     }
+// }
+
+
+
+// try {
+//     // Retrieve the logged-in user's information
+//     const loggedInUser = await SignUpModel.findOne({ _id: req.session.userId });
+    
+//     if (!loggedInUser) {
+//         // If user not found, redirect to login page
+//         res.redirect("/login");
+//         return;
+//     }
+
+//     // Render the create chat page with user information
+//     res.render("createChat", { userName: loggedInUser.userName, mobileNo: loggedInUser.mobileNo });
+// } catch (error) {
+//     console.error("Error retrieving user information:", error);
+//     res.redirect("/login"); // Redirect to login page in case of any error
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -566,3 +856,29 @@ module.exports = {
 //         res.status(500).send(err);
 //     }
 // }, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

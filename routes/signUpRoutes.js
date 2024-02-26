@@ -10,6 +10,13 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false})) //Post Body Parser
 
+app.use(session({
+  secret: 'your-secret-key', // Change this to a random string
+  resave: false,
+  saveUninitialized: true
+}));
+
+
 app.get( '/', (req,res) => {
   res.render("index")
 })
