@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+"const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
@@ -72,3 +72,4 @@ module.exports = UserChatModel
 //   default: Date.now
 // }
 
+"

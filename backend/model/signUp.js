@@ -23,7 +23,6 @@ let signUpSchema = new mongoose.Schema ( {
                 required:true,
                 
         },
-
 });
 
 const SignUpModel = mongoose.model("SignUp", signUpSchema)
