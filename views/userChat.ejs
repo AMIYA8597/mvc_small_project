@@ -3,38 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MVC Home</title>
+    <title>WhatsApp Home</title>
     <style>
         /* Add your CSS styles here */
     </style>
 </head>
 <body>
-    <div id="sidebar">
-        <h1>WhatsApp</h1>
-        <div id="user-profile">
-            <h2>Welcome <%= userName %></h2>
+    <div class="container">
+        <header>
+            <h1>Welcome <%= userName %></h1>
             <p>Your Mobile Number: <%= mobileNo %></p>
-        </div>
-        <div id="search-bar">
-            <input type="text" id="search-input" placeholder="Search by username or mobile number">
-            <button onclick="searchUser()">Search</button>
-        </div>
-        <div id="search-results">
-            <!-- Search results will be displayed here -->
-        </div>
-    </div>
-    <div id="main-content">
-        <!-- Chat messages and conversation will be displayed here -->
+        </header>
+        
+        <main>
+            <section id="searchSection">
+                <input type="text" id="searchInput" placeholder="Search by username or mobile number">
+                <button onclick="searchUsers()">Search</button>
+            </section>
+
+            <section id="userList">
+                <!-- Display search results here -->
+            </section>
+
+            <section id="messageSection" style="display: none;">
+                <h2>Send Message</h2>
+                <textarea id="messageInput" rows="4" cols="50" placeholder="Type your message here"></textarea>
+                <button onclick="sendMessage()">Send</button>
+            </section>
+        </main>
     </div>
 
     <script>
-        function searchUser() {
-            var searchTerm = document.getElementById('search-input').value;
-            // Perform search based on searchTerm (you can use AJAX to fetch results from the server)
-            // Display search results in #search-results div
+
+        function searchUsers() {
+            // Fetch search query
+            let searchQuery = document.getElementById('searchInput').value;
+            
+            // Simulate searching users (replace with actual AJAX call)
+            fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ searchQuery: searchQuery })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.userName && data.mobileNo) {
+                    // Display search results
+                    displaySearchResults([{ username: data.userName, mobileNo: data.mobileNo }]);
+                } else {
+                    // Display error message if user not found or sign-in process not completed
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error searching for user:', error);
+                alert('An error occurred while searching for the user. Please try again later.');
+            });
         }
 
-        // You can add more JavaScript for handling messaging functionality
+        function displaySearchResults(results) {
+            let userListSection = document.getElementById('userList');
+            userListSection.innerHTML = ''; // Clear previous results
+
+            // Display each search result
+            results.forEach(user => {
+                let userElement = document.createElement('div');
+                userElement.innerHTML = `
+                    <p>Username: ${user.username}</p>
+                    <p>Mobile Number: ${user.mobileNo}</p>
+                    <button onclick="startChat('${user.username}')">Start Chat</button>
+                `;
+                userListSection.appendChild(userElement);
+            });
+
+            // Show message section
+            document.getElementById('messageSection').style.display = 'block';
+        }
+
+        function startChat(username) {
+            // Start chat with the selected user
+            alert('Chat started with ' + username);
+        }
+
+        function sendMessage() {
+            // Send message functionality
+            let message = document.getElementById('messageInput').value;
+            // Implement sending message logic (e.g., using AJAX)
+            alert('Message sent: ' + message);
+        }
     </script>
 </body>
 </html>

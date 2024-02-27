@@ -14,13 +14,6 @@ app.use(express.json());
 //  // parse application/json
 app.use(bodyParser.json());
 
-// //  Session middleware setup
-// app.use(session({
-//     secret: 'your-secret-key', // Change this to a random string
-//     resave: false,
-//     saveUninitialized: true
-// }));
-
 module.exports = { 
 
     signUp_get: async (req , res) => {
@@ -126,80 +119,99 @@ module.exports = {
 
 
 
-        // res.render("userChat" ) 
-        // const { userName , mobileNo} = req.body;
 
-        // console.log("username and mobile number is",userName , mobileNo);
-
-    
-        // // console.log("createChat_get starting");
-
-        // // // res.send( "createChat_get starting "  )
-
-        // // res.render("userChat")
-
-        // try {
-        //     // const response = await SignUpModel.findOne({ mobileNo: 9876564578 });
-
-        //     // const response = await SignUpModel.find({}, 'userName mobileNo ').sort({ createdAt: -1 }).limit(1);
-        //     const response = await SignUpModel.findOne({}, 'userName mobileNo').sort({ createdAt: -1 });
-
-        //      // Assuming createdAt field indicates the order of creation
-        //     // console.log("response is ", response);
-            
-        //     res.render("userChat", { chatData: response } );
-
-        // } catch (err) {
-        //     res.status(500).send(err);
-        // }
-
-
-
-
-
-
-
-        // try {
-        //     if (req.session.userId) {
-        //         const user = await SignUpModel.findById(req.session.userId);
-        //         if (user) {
-        //             // Render the userChat view with user data
-        //             res.render('userChat', { mobileNumber: user.mobileNo, username: user.userName });
-        //         } else {
-        //             res.send("User not found");
-        //         }
-        //     } else {
-        //         res.redirect('/login');
-        //     }
-        // } 
-
-        // catch (error) {
-        //     console.log("Error retrieving user information:", error);
-        //     res.status(500).send("Internal Server Error");
-        // }
-
-
-        // try {
-        //     if (req.session.userId) {
-        //         const user = await SignUpModel.findById(req.session.userId);
-        //         if (user) {
-        //             // Render the userChat view with user data
-        //             res.render('userChat', { mobileNumber: user.mobileNo, username: user.username });
-        //         } else {
-        //             res.send("User not found");
-        //         }
-        //     } else {
-        //         res.redirect('/login');
-        //     }
-        // }
-
-        // catch (error) {
-        //     console.log("Error retrieving user information:", error);
-        //     res.status(500).send("Internal Server Error");
-        // }
            
     },
 
+    createChat_post :  async (req ,res)=>{
+        
+        let senderId=req.body.senderId ;
+        let receiverId=req.body.receiverId;
+        let message=req.body.message;
+      
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+     
+        // Create a new Chat object from the received data
+        const newMessage = new MessageModel(
+          {     senderId : senderId ,
+               receiverId : receiverId ,
+               message   : message ,
+               timestamp : `${time}`,
+           }
+        );
+        
+        try {
+              // Save the new Chat into the database
+              const result = await newMessage.save();
+            
+              // Send back the created Chat as response 
+              res.json(result);
+        }catch(err){
+            console.log('Error Creating New Message');
+            res.status(400).send(err);
+        }
+    },
+
+    getMessages : async (req,res)=> {
+        let chatId = req.params.chatId;
+        if (!ObjectID.isValid(chatId))
+            return res.status(404).send("No such chat exists!");
+        else {
+            // Retrieve and return the chat messages for this chat id from the DB   
+            Messages.find({"chatId": chatId},'timestamp senderId receiverId message')
+                .sort([['timestamp', 'ascending ']])
+                .exec((err,messages) => {
+                    if(!err) {
+                        res.status(200).json(messages);
+                    }else{
+                        console.error(err);
+                        res.status(500  ).send("Server error");
+                        }
+                });
+        }
+    },
+
+    searchUser : async (req, res) => {
+
+        console.log("search user started");
+
+            try {
+                const { searchQuery } = req.body; // Assuming the search query is sent in the request body
+
+                console.log("searchQuery is",searchQuery);
+                
+                // Search for the user by username or mobile number
+                const foundUser = await SignUpModel.findOne({
+                    $or: [
+                        { userName: searchQuery },
+                        { mobileNo: searchQuery }
+                    ]
+                });
+
+                console.log("foundUser is  ",foundUser);
+                
+                if (!foundUser) {
+                    res.status(404).json({ message: "User not found" });
+                    return;
+                }
+                
+                // Check if user's sign-in process is completed
+                if (foundUser) {
+                    res.status(200).json({
+                        userName: foundUser.userName,
+                        mobileNo: foundUser.mobileNo,
+                        // Add other necessary user information
+                    });
+                } else {
+                    // If sign-in process not completed, return a message indicating so
+                    res.status(400).json({ message: "User sign-in process not completed" });
+                }
+            } catch (error) {
+                console.error("Error searching for user:", error);
+                res.status(500).json({ message: "Internal server error" });
+            }
+    },
 
     after_get : async (req, res) => {
         res.render("after")
@@ -219,13 +231,6 @@ module.exports = {
             return;
         }
 
-        // if( mobileNo ==Number  && mobileNo === /[\d]{10}/ ) {
-        //     // res.send("Invalid Mobile Number")
-        //     return ;
-        // }
-
-         //  // Validate mobile number using regex
-    
         if (!mobileRegex.test(mobileNo)) {
             res.send("Invalid Mobile Number");
             return;
@@ -264,6 +269,354 @@ module.exports = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // searchUser: async (req, res) => {
+        
+    //     console.log("search user started");
+    //     try {
+    //         const { searchQuery } = req.body; // Assuming the search query is sent in the request body
+    //         console.log("searchQuery is ", searchQuery);
+            
+    //         // Search for the user by username or mobile number
+            
+    //         const foundUser = await SignUpModel.findOne({
+    //             $or: [
+    //                 { userName: searchQuery },
+    //                 { mobileNo: searchQuery }
+    //             ]
+    //         });
+    //         console.log("foundUser is  ", foundUser);
+            
+            
+    //         if (!foundUser) {
+    //             // If user not found, return a message indicating so
+    //             res.status(404).json({ message: "User not found" });
+    //             return;
+    //         }
+            
+    //         // Check if user's sign-in process is completed
+    //         if (foundUser.signInCompleted) {
+    //             // If sign-in process completed, return user information
+    //             res.status(200).json({
+    //                 userName: foundUser.userName,
+    //                 mobileNo: foundUser.mobileNo,
+    //             });
+    //         } else {
+    //             // If sign-in process not completed, return a message indicating so
+    //             res.status(400).json({ message: "User sign-in process not completed" });
+    //         }
+    //     } catch (error) {
+    //         console.error("Error searching for user:", error);
+    //         res.status(500).json({ message: "Internal server error" });
+    //     }
+    // },
+    
+    // searchUser: async (req, res) => {
+    //     try {
+    //         const { searchQuery } = req.body;
+    
+    //         // Check if searchQuery is a number (mobile number) or a string (username)
+    //         const isMobileNumber = !isNaN(searchQuery); // Check if it's a number
+    
+    //         let foundUser;
+    //         if (isMobileNumber) {
+    //             foundUser = await SignUpModel.findOne({ mobileNo: searchQuery });
+    //         } else {
+    //             foundUser = await SignUpModel.findOne({ userName: searchQuery });
+    //         }
+    
+    //         if (!foundUser) {
+    //             res.status(404).json({ message: "User not found" });
+    //             return;
+    //         }
+    
+    //         if (foundUser.signInCompleted) {
+    //             res.status(200).json({
+    //                 userName: foundUser.userName,
+    //                 mobileNo: foundUser.mobileNo,
+    //                 // Add other necessary user information
+    //             });
+    //         } else {
+    //             res.status(400).json({ message: "User sign-in process not completed" });
+    //         }
+    //     } catch (error) {
+    //         console.error("Error searching for user:", error);
+    //         res.status(500).json({ message: "Internal server error" });
+    //     }
+    // },
+
+
+
+
+
+
+
+
+
+// createChat_get = async (req, res) => {
+//     try {
+//         // Retrieve the logged-in user's information
+//         const loggedInUser = await SignUpModel.findOne({ _id: req.session.userId });
+        
+//         if (!loggedInUser) {
+//             // If user not found, redirect to login page
+//             res.redirect("/login");
+//             return;
+//         }
+
+//         // Render the create chat page with user information
+//         res.render("userChat", { userName: loggedInUser.userName, mobileNo: loggedInUser.mobileNo });
+//     } catch (error) {
+//         console.error("Error retrieving user information:", error);
+//         res.redirect("/login"); // Redirect to login page in case of any error
+//     }
+// };
+
+// exports.createChat_post = async (req, res) => {
+//     let senderId = req.body.senderId;
+//     let receiverId = req.body.receiverId;
+//     let message = req.body.message;
+  
+//     var today = new Date();
+//     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+ 
+//     // Create a new Chat object from the received data
+//     const newMessage = new MessageModel({
+//         senderId: senderId,
+//         receiverId: receiverId,
+//         message: message,
+//         timestamp: `${time}`,
+//     });
+    
+//     try {
+//         // Save the new Chat into the database
+//         const result = await newMessage.save();
+      
+//         // Send back the created Chat as response 
+//         res.json(result);
+//     } catch (err) {
+//         console.log('Error Creating New Message');
+//         res.status(400).send(err);
+//     }
+// };
+
+// exports.getMessages = async (req, res) => {
+//     let chatId = req.params.chatId;
+//     if (!ObjectID.isValid(chatId))
+//         return res.status(404).send("No such chat exists!");
+//     else {
+//         // Retrieve and return the chat messages for this chat id from the DB   
+//         Messages.find({ "chatId": chatId }, 'timestamp senderId receiverId message')
+//             .sort([['timestamp', 'ascending ']])
+//             .exec((err, messages) => {
+//                 if (!err) {
+//                     res.status(200).json(messages);
+//                 } else {
+//                     console.error(err);
+//                     res.status(500).send("Server error");
+//                 }
+//             });
+//     }
+// };
+
+// exports.searchUser = async (req, res) => {
+//     try {
+//         const { searchQuery } = req.body; // Assuming the search query is sent in the request body
+        
+//         // Search for the user by username or mobile number
+//         const foundUser = await SignUpModel.findOne({
+//             $or: [
+//                 { userName: searchQuery },
+//                 { mobileNo: searchQuery }
+//             ]
+//         });
+        
+//         if (!foundUser) {
+//             // If user not found, return a message indicating so
+//             res.status(404).json({ message: "User not found" });
+//             return;
+//         }
+        
+//         // Check if user's sign-in process is completed
+//         if (foundUser.signInCompleted) {
+//             // If sign-in process completed, return user information
+//             res.status(200).json({
+//                 userName: foundUser.userName,
+//                 mobileNo: foundUser.mobileNo,
+//                 // Add other necessary user information
+//             });
+//         } else {
+//             // If sign-in process not completed, return a message indicating so
+//             res.status(400).json({ message: "User sign-in process not completed" });
+//         }
+//     } catch (error) {
+//         console.error("Error searching for user:", error);
+//         res.status(500).json({ message: "Internal server error" });
+//     }
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// exports.createChat_get = async (req, res) => {
+//     try {
+//         // Retrieve the logged-in user's information
+//         const loggedInUser = await SignUpModel.findOne({ _id: req.session.userId });
+        
+//         if (!loggedInUser) {
+//             // If user not found, redirect to login page
+//             res.redirect("/login");
+//             return;
+//         }
+
+//         // Render the create chat page with user information
+//         res.render("userChat", { userName: loggedInUser.userName, mobileNo: loggedInUser.mobileNo });
+//     } catch (error) {
+//         console.error("Error retrieving user information:", error);
+//         res.redirect("/login"); // Redirect to login page in case of any error
+//     }
+// };
+
+// exports.searchUser = async (req, res) => {
+//     try {
+//         const { searchQuery } = req.body;
+
+//         // Search for the user by username or mobile number
+//         const foundUser = await SignUpModel.findOne({
+//             $or: [
+//                 { userName: searchQuery },
+//                 { mobileNo: searchQuery }
+//             ]
+//         });
+
+//         if (!foundUser) {
+//             // If user not found, return a message indicating so
+//             res.status(404).json({ message: "User not found" });
+//             return;
+//         }
+
+//         // Check if user's sign-in process is completed
+//         if (foundUser.signInCompleted) {
+//             // If sign-in process completed, return user information
+//             res.status(200).json({
+//                 userName: foundUser.userName,
+//                 mobileNo: foundUser.mobileNo,
+//                 // Add other necessary user information
+//             });
+//         } else {
+//             // If sign-in process not completed, return a message indicating so
+//             res.status(400).json({ message: "User sign-in process not completed" });
+//         }
+//     } catch (error) {
+//         console.error("Error searching for user:", error);
+//         res.status(500).json({ message: "Internal server error" });
+//     }
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+//     createChat_post : async (req ,res)=>{ 
+        
+//        let recieverMobileNo=req.body.recieverMobileNo;
+//        let senderId=req.session.userId;
+//        let message=req.body.message;
+//        let newChat=new Chats ({senderId:senderId , recieverMobileNo:recieverMobileNo , message:message});
+//        await newChat.save();
+//        res.json(await Chats.find({"senderId":senderId,"recieverMobileNo":recieverMobileNo}).sort('-createdAt'));
+//        res.json(await Chats.find({"senderId":senderId,"recieverMobileNo":recieverMobileNo}).sort('-createdAt'));
+//        res.json(await Chats.findById(newChat._id));//send back the saved data as a json response
+//    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// searchUser: async (req, res) => {
+//     try {
+//         const { searchQuery } = req.body; // Assuming the search query is sent in the request body
+
+//         // Search for the user by username or mobile number
+//         const foundUser = await SignUpModel.findOne({
+//             $or: [
+//                 { userName: searchQuery },
+//                 { mobileNo: searchQuery }
+//             ]
+//         });
+
+//         if (!foundUser) {
+//             // If user not found, return a message indicating so
+//             res.status(404).json({ message: "User not found" });
+//             return;
+//         }
+
+//         // Check if user's sign-in process is completed
+//         if (foundUser.signInCompleted) {
+//             // If sign-in process completed, return user information
+//             res.status(200).json({
+//                 userName: foundUser.userName,
+//                 mobileNo: foundUser.mobileNo,
+//                 // Add other necessary user information
+//             });
+//         } else {
+//             // If sign-in process not completed, return a message indicating so
+//             res.status(400).json({ message: "User sign-in process not completed" });
+//         }
+//     } catch (error) {
+//         console.error("Error searching for user:", error);
+//         res.status(500).json({ message: "Internal server error" });
+//     }
+// }
 
 
 
@@ -370,6 +723,92 @@ module.exports = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // res.render("userChat" ) 
+        // const { userName , mobileNo} = req.body;
+
+        // console.log("username and mobile number is",userName , mobileNo);
+
+    
+        // // console.log("createChat_get starting");
+
+        // // // res.send( "createChat_get starting "  )
+
+        // // res.render("userChat")
+
+        // try {
+        //     // const response = await SignUpModel.findOne({ mobileNo: 9876564578 });
+
+        //     // const response = await SignUpModel.find({}, 'userName mobileNo ').sort({ createdAt: -1 }).limit(1);
+        //     const response = await SignUpModel.findOne({}, 'userName mobileNo').sort({ createdAt: -1 });
+
+        //      // Assuming createdAt field indicates the order of creation
+        //     // console.log("response is ", response);
+            
+        //     res.render("userChat", { chatData: response } );
+
+        // } catch (err) {
+        //     res.status(500).send(err);
+        // }
+
+
+
+
+
+
+
+        // try {
+        //     if (req.session.userId) {
+        //         const user = await SignUpModel.findById(req.session.userId);
+        //         if (user) {
+        //             // Render the userChat view with user data
+        //             res.render('userChat', { mobileNumber: user.mobileNo, username: user.userName });
+        //         } else {
+        //             res.send("User not found");
+        //         }
+        //     } else {
+        //         res.redirect('/login');
+        //     }
+        // } 
+
+        // catch (error) {
+        //     console.log("Error retrieving user information:", error);
+        //     res.status(500).send("Internal Server Error");
+        // }
+
+
+        // try {
+        //     if (req.session.userId) {
+        //         const user = await SignUpModel.findById(req.session.userId);
+        //         if (user) {
+        //             // Render the userChat view with user data
+        //             res.render('userChat', { mobileNumber: user.mobileNo, username: user.username });
+        //         } else {
+        //             res.send("User not found");
+        //         }
+        //     } else {
+        //         res.redirect('/login');
+        //     }
+        // }
+
+        // catch (error) {
+        //     console.log("Error retrieving user information:", error);
+        //     res.status(500).send("Internal Server Error");
+        // }
 
 
 
