@@ -2,13 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
-
 let signUpSchema = new mongoose.Schema ( {
 
         userName :{     
                 type:String,
                 required: true,
-                trim: true
+                trim: true,
         },
                 
         mobileNo:{

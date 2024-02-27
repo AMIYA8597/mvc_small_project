@@ -1,98 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Home</title>
-    <style>
-        /* Add your CSS styles here */
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Welcome <%= userName %></h1>
-            <p>Your Mobile Number: <%= mobileNo %></p>
-        </header>
-        
-        <main>
-            <section id="searchSection">
-                <input type="text" id="searchInput" placeholder="Search by username or mobile number">
-                <button onclick="searchUsers()">Search</button>
-            </section>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MVC Home</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-            <section id="userList">
-                <!-- Display search results here -->
-            </section>
+        <style>
+            /* Add your CSS styles here */
+        </style>
+    </head>
 
-            <section id="messageSection" style="display: none;">
-                <h2>Send Message</h2>
-                <textarea id="messageInput" rows="4" cols="50" placeholder="Type your message here"></textarea>
-                <button onclick="sendMessage()">Send</button>
-            </section>
-        </main>
-    </div>
-
-    <script>
-
-        function searchUsers() {
-            // Fetch search query
-            let searchQuery = document.getElementById('searchInput').value;
+    <body>
+        <div class="container">
+            <header>
+                <h1>Welcome <%= userName %></h1>
+                <p>Your Mobile Number: <%= mobileNo %></p>
+            </header>
             
-            // Simulate searching users (replace with actual AJAX call)
-            fetch('/search', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ searchQuery: searchQuery })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.userName && data.mobileNo) {
-                    // Display search results
-                    displaySearchResults([{ username: data.userName, mobileNo: data.mobileNo }]);
-                } else {
-                    // Display error message if user not found or sign-in process not completed
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error searching for user:', error);
-                alert('An error occurred while searching for the user. Please try again later.');
-            });
-        }
+            <main>
+                <section id="searchSection">
+                    <input type="text" id="searchInput" placeholder="Search by username or mobile number">
+                    <button onclick="searchUsers()">Search</button>
+                </section>
 
-        function displaySearchResults(results) {
-            let userListSection = document.getElementById('userList');
-            userListSection.innerHTML = ''; // Clear previous results
+                <section id="userList">
+                    <!-- Display search results here -->
+                </section>
 
-            // Display each search result
-            results.forEach(user => {
-                let userElement = document.createElement('div');
-                userElement.innerHTML = `
-                    <p>Username: ${user.username}</p>
-                    <p>Mobile Number: ${user.mobileNo}</p>
-                    <button onclick="startChat('${user.username}')">Start Chat</button>
-                `;
-                userListSection.appendChild(userElement);
-            });
+                <section id="messageSection" style="display: none;">
+                    <h2>Send Message</h2>
+                    <textarea id="messageInput" rows="4" cols="50" placeholder="Type your message here"></textarea>
+                    <button onclick="sendMessage()">Send</button>
+                </section>
+            </main>
+        </div>
 
-            // Show message section
-            document.getElementById('messageSection').style.display = 'block';
-        }
+        <script>
 
-        function startChat(username) {
-            // Start chat with the selected user
-            alert('Chat started with ' + username);
-        }
+            function searchUsers() {
+                // Fetch search query
+                let searchQuery = document.getElementById('searchInput').value;
+                
+                // Simulate searching users (replace with actual AJAX call)
+                fetch('/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ searchQuery: searchQuery })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.userName && data.mobileNo) {
+                        // Display search results
+                        displaySearchResults([{ username: data.userName, mobileNo: data.mobileNo }]);
+                    } else {
+                        // Display error message if user not found or sign-in process not completed
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error searching for user:', error);
+                    alert('An error occurred while searching for the user. Please try again later.');
+                });
+            }
 
-        function sendMessage() {
-            // Send message functionality
-            let message = document.getElementById('messageInput').value;
-            // Implement sending message logic (e.g., using AJAX)
-            alert('Message sent: ' + message);
-        }
-    </script>
-</body>
+            function displaySearchResults(results) {
+                let userListSection = document.getElementById('userList');
+                userListSection.innerHTML = ''; // Clear previous results
+
+                // Display each search result
+                results.forEach(user => {
+                    let userElement = document.createElement('div');
+                    userElement.innerHTML = `
+                        <br>
+                        <h3>Username: ${user.username}</h3>
+                        <h3>Mobile Number: ${user.mobileNo}</h3>
+                    `;
+                    userListSection.appendChild(userElement);
+                });
+
+                // Show message section
+                document.getElementById('messageSection').style.display = 'block';
+            }
+
+            function startChat(username) {
+                // Start chat with the selected user
+                alert('Chat started with ' + username);
+            }
+
+            function sendMessage() {
+                // Send message functionality
+                let message = document.getElementById('messageInput').value;
+                // Implement sending message logic (e.g., using AJAX)
+                alert('Message sent: ' + message);
+            }
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    </body>
 </html>
