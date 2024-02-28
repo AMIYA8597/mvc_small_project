@@ -148,91 +148,94 @@ module.exports = {
    
         // // here search query is only mobile number included
         
-    searchUser : async (req, res) => {
-
-        console.log("search user started");
-
-            try {
-                const { searchQuery } = req.body; 
-
-                console.log("searchQuery is",searchQuery);
-                
-                const foundUser = await SignUpModel.findOne({
-                    $or: [
-                        { userName: searchQuery },
-                        { mobileNo: searchQuery }
-                    ]
-                });
-
-                console.log("foundUser is  ",foundUser);
-                
-                if (!foundUser) {
-                    res.status(404).json({ message: "User not found" });
-                    return;
-                }
-                
-               
-                if (foundUser) {
-                    res.status(200).json({
-                        userName: foundUser.userName,
-                        mobileNo: foundUser.mobileNo,
-                        // Add other necessary user information
-                    });
-                } else {
-              
-                    res.status(400).json({ message: "User sign-in process not completed" });
-                }
-                
-            } catch (error) {
-                console.error("Error searching for user:", error);
-                res.status(500).json({ message: "don`t give me error" });
-                // res.status(500).json({ message: "Internal server error" });
-            }
-    },
-
-   //     // here search query is username and  password both
-    // searchUser: async (req, res) => {
+    // searchUser : async (req, res) => {
 
     //     console.log("search user started");
 
-    //     try {
-    //         const { searchQuery } = req.body; 
-            
-    //         console.log("searchQuery is",searchQuery);
+    //         try {
+    //             const { searchQuery } = req.body; 
 
-    //         const isMobileNumber = !isNaN(searchQuery); 
-    //         console.log("isMobileNumber is ", isMobileNumber);
-    
-    //         let foundUser;
-    //         if (isMobileNumber) {
-    
-    //             foundUser = await SignUpModel.findOne({ mobileNo: searchQuery });
-
-    //         } else {
+    //             console.log("searchQuery is",searchQuery);
                 
-    //             foundUser = await SignUpModel.findOne({ userName: searchQuery });
-    //         }
-            
-    //         if (!foundUser) {
-                
-    //             res.status(404).json({ message: "User not found" });
-    //             return;
-    //         }
-            
-    //         if (foundUser) {
-    //             res.status(200).json({
-    //                 userName: foundUser.userName,
-    //                 mobileNo: foundUser.mobileNo, 
+    //             const foundUser = await SignUpModel.findOne({
+    //                 $or: [
+    //                     { userName: searchQuery },
+    //                     { mobileNo: searchQuery }
+    //                 ]
     //             });
 
-    //         } else {
-    //             res.status(400).json({ message: "User sign-in process not completed" });
+    //             console.log("foundUser is  ",foundUser);
+                
+    //             if (!foundUser) {
+    //                 res.status(404).json({ message: "User not found" });
+    //                 return;
+    //             }
+                
+               
+    //             if (foundUser) {
+    //                 res.status(200).json({
+    //                     userName: foundUser.userName,
+    //                     mobileNo: foundUser.mobileNo,
+    //                     // Add other necessary user information
+    //                 });
+    //             } else {
+              
+    //                 res.status(400).json({ message: "User sign-in process not completed" });
+    //             }
+                
+    //         } catch (error) {
+    //             console.error("Error searching for user:", error);
+    //             res.status(500).json({ message: "username or mobileNumber not found" });
+    //             // res.status(500).json({ message: "don`t give me error" });
+    //             // res.status(500).json({ message: "Internal server error" });
     //         }
-    //     } catch (error) {
-    //         console.error("Error searching for user:", error);
-    //         res.status(500).json({ message: "Internal server error" });
-    //     }
     // },
+
+    
+   //     // here search query is username and  password both
+
+    searchUser: async (req, res) => {
+
+        console.log("search user started");
+
+        try {
+            const { searchQuery } = req.body; 
+            
+            console.log("searchQuery is",searchQuery);
+
+            const isMobileNumber = !isNaN(searchQuery); 
+            console.log("isMobileNumber is ", isMobileNumber);
+    
+            let foundUser;
+            if (isMobileNumber) {
+    
+                foundUser = await SignUpModel.findOne({ mobileNo: searchQuery });
+
+            } else {
+                
+                foundUser = await SignUpModel.findOne({ userName: searchQuery });
+            }
+            
+            if (!foundUser) {
+                
+                res.status(404).json({ message: "User not found" });
+                return;
+            }
+            
+            if (foundUser) {
+                res.status(200).json({
+                    userName: foundUser.userName,
+                    mobileNo: foundUser.mobileNo, 
+                });
+
+            } else {
+                res.status(400).json({ message: "User sign-in process not completed" });
+            }
+        } catch (error) {
+            console.error("Error searching for user:", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+    },
 
     getMessages : async (req,res)=> {
         let chatId = req.params.chatId;
