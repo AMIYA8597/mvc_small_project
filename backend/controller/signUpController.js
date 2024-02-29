@@ -266,33 +266,37 @@ module.exports = {
 
     forget_post : async (req,res) => {
         console.log("forgot password is starting");
-        const { mobileNo , newPassword} = req.body;
 
-        if (newPassword.length < 6) {
-            // return res.render("login", { error: "Password must be at least 8 characters long" });
-            res.send("password need min 6 character")
-            return;
-        }
+      try {
 
-        if (!mobileRegex.test(mobileNo)) {
-            res.send("Invalid Mobile Number");
-            return;
-        }
+                const { mobileNo , newPassword} = req.body;
 
-        try {
-            const forgetUser = await SignUpModel.findOne({mobileNo});
+                if (newPassword.length < 6) {
+                    // return res.render("login", { error: "Password must be at least 8 characters long" });
+                    
+                    res.send("password need min 6 character")
+                    return;
+                }
+                console.log();("password need minimum 6 character")
 
-            if(!forgetUser){
-                res.render("forgetpass")
-                // alert( "This user does not exist! Please enter correct details.")              
-            };
+                if (!mobileRegex.test(mobileNo)) {
+                    res.send("Invalid Mobile Number");
+                    return;
+                }
+
+                    const forgetUser = await SignUpModel.findOne({mobileNo});
+
+                    if(!forgetUser){
+                        res.render("forgetpass")
+                        // alert( "This user does not exist! Please enter correct details.")              
+                    };
+                    
+                    forgetUser.password=newPassword;
+                    await forgetUser.save();
+                    res.redirect("login" )
             
-            forgetUser.password=newPassword;
-            await forgetUser.save();
-            res.redirect("login" )
-            
-        }  catch(err){
-            console.log(err);
+        }        catch(err){
+                    console.log(err);
         }
         
         // res.redirect("/login");
