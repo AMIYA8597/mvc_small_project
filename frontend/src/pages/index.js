@@ -18,9 +18,12 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   // const [user, setUser] = useState(null);
       return (
+
         <BaseLayout>
         <BasicCard/>
         </BaseLayout>
+        
       );
+
 
 }

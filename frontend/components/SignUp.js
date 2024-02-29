@@ -70,6 +70,7 @@ export default function SignUp({ setUser }) {
   };
 
   return (
+
     <div className="form" style={{ fontFamily: "Arial, sans-serif", maxWidth: "400px", margin: "auto", padding: "20px", borderRadius: "8px", boxShadow: "0 0 10px rgba(0,0,0,0.1)", backgroundColor: "#f9f9f9" }}>
       <div style={{ marginBottom: "20px" }}>
         <h1 style={{ textAlign: "center" }}>User Registration</h1>
@@ -120,7 +121,9 @@ export default function SignUp({ setUser }) {
                     Already have an account? <Link to="/signin">Sign In</Link>
                   </p> */}
     </div>
+    
   );
+
 }
 
 
