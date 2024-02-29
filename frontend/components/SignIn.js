@@ -118,46 +118,47 @@ export default function SignIn() {
             {successMessage()}
         </div>
 
-        <form>
-            {/* Labels and inputs for form data */}
+                <form>
+                    {/* Labels and inputs for form data */}
 
 
-            {/* <div style={{ marginBottom: "20px" }}>
-            <label style={{ display: "block", marginBottom: "5px" }}>Name</label>
-            <input
-                onChange={handleName}
-                style={{ width: "100%", padding: "8px", fontSize: "16px", borderRadius: "4px", border: "1px solid #ccc" }}
-                value={name}
-                type="text"
-            />
-            </div> */}
+                    {/* <div style={{ marginBottom: "20px" }}>
+                    <label style={{ display: "block", marginBottom: "5px" }}>Name</label>
+                    <input
+                        onChange={handleName}
+                        style={{ width: "100%", padding: "8px", fontSize: "16px", borderRadius: "4px", border: "1px solid #ccc" }}
+                        value={name}
+                        type="text"
+                    />
+                    </div> */}
 
 
-            <div style={{ marginBottom: "20px" }}>
-            <label style={{ display: "block", marginBottom: "5px" }}>Mobile Number</label>
-            <input
-                onChange={handleMobileNumber}
-                style={{ width: "100%", padding: "8px", fontSize: "16px", borderRadius: "4px", border: "1px solid #ccc" }}
-                value={mobileNumber}
-                type="text"
-            />
-            </div>
+                    <div style={{ marginBottom: "20px" }}>
+                    <label style={{ display: "block", marginBottom: "5px" }}>Mobile Number</label>
+                    <input
+                        onChange={handleMobileNumber}
+                        style={{ width: "100%", padding: "8px", fontSize: "16px", borderRadius: "4px", border: "1px solid #ccc" }}
+                        value={mobileNumber}
+                        type="text"
+                    />
+                    </div>
 
-            <div style={{ marginBottom: "20px" }}>
-            <label style={{ display: "block", marginBottom: "5px" }}>Password</label>
-            <input
-                onChange={handlePassword}
-                style={{ width: "100%", padding: "8px", fontSize: "16px", borderRadius: "4px", border: "1px solid #ccc" }}
-                value={password}
-                type="password"
-            />
-            </div>
+                    <div style={{ marginBottom: "20px" }}>
+                    <label style={{ display: "block", marginBottom: "5px" }}>Password</label>
+                    <input
+                        onChange={handlePassword}
+                        style={{ width: "100%", padding: "8px", fontSize: "16px", borderRadius: "4px", border: "1px solid #ccc" }}
+                        value={password}
+                        type="password"
+                    />
+                    </div>
 
-            <button onClick={handleSubmit} style={{ padding: "10px 20px", fontSize: "16px", backgroundColor: "#4caf50", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer" }} type="submit">
-            Submit
-            </button>
-        </form>
-        {/* <p>Don't have an account? <Link to="/signup">Sign Up</Link></p> */}
+                    <button onClick={handleSubmit} style={{ padding: "10px 20px", fontSize: "16px", backgroundColor: "#4caf50", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer" }} type="submit">
+                    Submit
+                    </button>
+                </form>
+
+
         </div>
     );
 }
@@ -178,6 +179,7 @@ export default function SignIn() {
 
 
 
+{/* <p>Don't have an account? <Link to="/signup">Sign Up</Link></p> */}
 
 
 
