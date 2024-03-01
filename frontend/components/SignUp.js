@@ -43,7 +43,9 @@ export default function SignUp({ setUser }) {
 
   // Showing success message
   const successMessage = () => {
+    
     return (
+
       <div
         className="success"
         style={{
@@ -58,6 +60,7 @@ export default function SignUp({ setUser }) {
   // Showing error message if error is true
   const errorMessage = () => {
     return (
+
       <div
         className="error"
         style={{
@@ -75,6 +78,7 @@ export default function SignUp({ setUser }) {
       <div style={{ marginBottom: "20px" }}>
         <h1 style={{ textAlign: "center" }}>User Registration</h1>
       </div>
+
       {/* Calling to the methods */}
       <div className="messages" style={{ marginBottom: "20px" }}>
         {errorMessage()}

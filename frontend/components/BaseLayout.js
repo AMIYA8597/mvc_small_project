@@ -7,7 +7,6 @@ import SignIn from "./SignIn";
 const BaseLayout= ({ children }) => {
   return (
     <>
-
         {/* <Navbar/> */}
 
            <SignUp />
@@ -19,7 +18,6 @@ const BaseLayout= ({ children }) => {
               {children}
             </div>
           </div>
-
     </>
   );
 };

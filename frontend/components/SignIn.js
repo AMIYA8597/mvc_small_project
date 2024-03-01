@@ -118,7 +118,6 @@ export default function SignIn() {
             {errorMessage()}
             {successMessage()}
         </div>
-
                 <form>
                     {/* Labels and inputs for form data */}
 
@@ -132,7 +131,6 @@ export default function SignIn() {
                         type="text"
                     />
                     </div> */}
-
 
                     <div style={{ marginBottom: "20px" }}>
                     <label style={{ display: "block", marginBottom: "5px" }}>Mobile Number</label>
@@ -158,8 +156,6 @@ export default function SignIn() {
                     Submit
                     </button>
                 </form>
-
-
         </div>
     );
 }
