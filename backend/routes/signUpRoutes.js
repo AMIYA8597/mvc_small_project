@@ -47,6 +47,7 @@ app.get("/chat", SignUpController.createChat_get)
 app.get('/messages/:chatId', SignUpController.getMessages);
 
 // app.get("/chat", userChatController.createChat_get)
+
 // app.post("/chat", userChatController.createChat_post)
 //---------------------------Chatting Server------------------------------
 //Chatting page

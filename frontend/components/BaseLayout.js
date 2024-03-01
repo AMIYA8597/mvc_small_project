@@ -10,7 +10,7 @@ const BaseLayout= ({ children }) => {
 
         {/* <Navbar/> */}
 
-           {/* <SignUp /> */}
+           <SignUp />
 
         <SignIn />
 

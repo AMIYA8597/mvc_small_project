@@ -10,15 +10,18 @@ let messageSchema = new mongoose.Schema ( {
         ref: 'SignUpModel', 
         required: true
     },
+
     receiverId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'SignUpModel',
         required: true
     },
+
     message: {
         type: String,
         required: true
     },
+    
     timestamp: {
         type: Date,
         default: Date.now

@@ -192,7 +192,7 @@ module.exports = {
     // },
 
     
-   //     // here search query is username and  password both
+   //   // here search query is username and  password both
 
     searchUser: async (req, res) => {
 
@@ -268,7 +268,6 @@ module.exports = {
         console.log("forgot password is starting");
 
       try {
-
                 const { mobileNo , newPassword} = req.body;
 
                 if (newPassword.length < 6) {

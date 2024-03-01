@@ -20,7 +20,9 @@ export default function Home() {
       return (
 
         <BaseLayout>
+
         <BasicCard/>
+        
         </BaseLayout>
         
       );
